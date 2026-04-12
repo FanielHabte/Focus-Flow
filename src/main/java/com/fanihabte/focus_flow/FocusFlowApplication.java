@@ -1,13 +1,13 @@
-package com.fanihabte.focus_time;
+package com.fanihabte.focus_flow;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FocusTimeApplication {
+public class FocusFlowApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FocusTimeApplication.class, args);
+		SpringApplication.run(FocusFlowApplication.class, args);
 	}
 
 }

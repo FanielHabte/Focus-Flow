@@ -1,10 +1,10 @@
-package com.fanihabte.focus_time;
+package com.fanihabte.focus_flow;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FocusTimeApplicationTests {
+class FocusFlowApplicationTests {
 
 	@Test
 	void contextLoads() {
