@@ -1,4 +1,4 @@
-package com.fanihabte.focus_flow.entity;
+package com.fanihabte.focus_flow.userSettings;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
-package com.fanihabte.focus_flow.entity;
+package com.fanihabte.focus_flow.focusSession;
 
-import com.fanihabte.focus_flow.enums.SessionStatus;
+import com.fanihabte.focus_flow.task.Task;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

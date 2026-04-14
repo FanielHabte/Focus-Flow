@@ -1,7 +1,5 @@
-package com.fanihabte.focus_flow.entity;
+package com.fanihabte.focus_flow.task;
 
-import com.fanihabte.focus_flow.enums.TaskCategory;
-import com.fanihabte.focus_flow.enums.TaskStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,8 +16,8 @@ public class Task {
     @Enumerated (EnumType.STRING)
     private TaskCategory category;
     @Enumerated (EnumType.STRING)
-
     private TaskStatus status;
+
     private LocalDateTime scheduledStart;
     private LocalDateTime dueDate;
 
@@ -116,6 +114,22 @@ public class Task {
 
     public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", category=" + category +
+                ", status=" + status +
+                ", scheduledStart=" + scheduledStart +
+                ", dueDate=" + dueDate +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", completedAt=" + completedAt +
+                '}';
     }
 
 }
