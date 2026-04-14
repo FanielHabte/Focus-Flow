@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Website</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Your next task is ready.</h1>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th> Title </th>
+                    <th> Category </th>
+                    <th> Status </th>
+                    <th> Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each=" task : ${tasks}">
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.category}"></td>
+                    <td th:text="${task.status}"></td>
+                    <td th:text="${task.description}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer>
+            <p>&copy; 2026 Focus Flow</p>
+        </footer>
+    </body>
+</html>

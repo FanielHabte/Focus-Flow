@@ -1,5 +1,8 @@
-package com.fanihabte.focus_flow.task;
+package com.fanihabte.focus_flow.service;
 
+import com.fanihabte.focus_flow.entity.Task;
+import com.fanihabte.focus_flow.enums.TaskStatus;
+import com.fanihabte.focus_flow.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,7 +20,7 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Integer[] getCompleteAndAllTaskCounts () {
+    private Integer[] getCompleteAndAllTaskCounts () {
         List<Task> allTasks = taskRepository.findAll();
         int countOfAllTasks = allTasks.size();
         int countOfCompletedTasks = allTasks
@@ -69,7 +72,26 @@ public class TaskService {
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .toList();
 
-        return orderedTasks.getFirst();
+        if (orderedTasks.isEmpty()) {
+            return null;
+        }
+        else {
+            return orderedTasks.getFirst();
+        }
+
+    }
+
+    public Task getTaskByID (Long id) {
+        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found with ID: " + id));
+    }
+
+    public void createNewTask (Task newTask) {
+        taskRepository.save(newTask);
+    }
+
+    public void updateTaskStatus(Task task, TaskStatus toStatus) {
+        task.setStatus(toStatus);
+        taskRepository.save(task);
     }
 
 }
