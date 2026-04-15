@@ -40,7 +40,7 @@ public class TaskController {
     }
 
     // This method creates a task from form input
-    @PostMapping("/tasks")
+    @PostMapping("/task/create")
     public String createTask (@ModelAttribute Task task) {
         taskService.createNewTask(task);
         return "redirect:/";
