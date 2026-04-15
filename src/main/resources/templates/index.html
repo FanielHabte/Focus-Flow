@@ -49,25 +49,32 @@
                 <div class="internal-navigation">
                     <h5> TODAY </h5>
                     <h4> Focus List </h4>
-                    <div class="filter-buttons">
-                        <button onclick="showAllTasks()"> All </button>
-                        <button onclick="showTodayTasks()"> Today </button>
-                        <button onclick="showCompletedTasks()"> Done </button>
+                    <div id="filter-buttons">
+                        <button class="active"> All </button>
+                        <button> Today </button>
+                        <button> Done </button>
                     </div>
                 </div>
 
                 <!-- ALL TASKS -->
                 <div class="app-all-tasks" th:unless = "${tasks.isEmpty()}">
                     <div class="task-card" th:each = "task : ${tasks}">
-                        <h4 class="task-title" th:text = "${task.title}"></h4>
+                        <div class="task-header">
+                            <p class="task-title" th:text = "${task.title}"></p>
+                            <p th:class = "|task-status status-${task.status.className()}|"
+                               th:text = "${task.status}">
+                            </p>
+                        </div>
                         <p class="task-description" th:text = "${task.description}"> Task description </p>
                         <p class="task-time" th:text = "${task.dueDate}"> Task time </p>
-                        <form th:action = "@{/tasks/{id}/complete(id=${task.taskId})}" method="POST">
-                            <button type="submit" class="task-update"> Complete </button>
-                        </form>
-                        <form th:action = "@{/tasks/{id}/delete(id=${task.taskId})}" method="POST">
-                            <button type="submit" class="task-complete"> Delete </button>
-                        </form>
+                        <div class="task-buttons-container">
+                            <form th:action = "@{/tasks/{id}/complete(id=${task.taskId})}" method="POST">
+                                <button type="submit" class="task-update"> Complete </button>
+                            </form>
+                            <form th:action = "@{/tasks/{id}/delete(id=${task.taskId})}" method="POST">
+                                <button type="submit" class="task-complete"> Delete </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="app-all-tasks" th:if = "${tasks.isEmpty()}">
@@ -77,15 +84,22 @@
                 <!-- TODAY'S TASKS -->
                 <div class="app-today-tasks" th:unless = "${todayTasks.isEmpty()}">
                     <div class="task-card" th:each = "todayTask : ${todayTasks}">
-                        <h4 class="task-title" th:text = "${todayTask.title}"></h4>
+                        <div class="task-header">
+                            <p class="task-title" th:text = "${todayTask.title}"></p>
+                            <p th:class = "|task-status status-${todayTask.status.className()}|"
+                               th:text = "${todayTask.status}">
+                            </p>
+                        </div>
                         <p class="task-description" th:text = "${todayTask.description}"></p>
                         <p class="task-time" th:text = "${todayTask.dueDate}"></p>
-                        <form th:action = "@{/tasks/{id}/complete(id=${todayTask.taskId})}" method="POST">
-                            <button type="submit" class="task-update"> Complete </button>
-                        </form>
-                        <form th:action = "@{/tasks/{id}/delete(id=${todayTask.taskId})}" method="POST">
-                            <button type="submit" class="task-complete"> Delete </button>
-                        </form>
+                        <div class="task-buttons-container">
+                            <form th:action = "@{/tasks/{id}/complete(id=${todayTask.taskId})}" method="POST">
+                                <button type="submit" class="task-update"> Complete </button>
+                            </form>
+                            <form th:action = "@{/tasks/{id}/delete(id=${todayTask.taskId})}" method="POST">
+                                <button type="submit" class="task-complete"> Delete </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="app-today-tasks" th:if = "${todayTasks.isEmpty()}">
@@ -95,15 +109,23 @@
                 <!-- COMPLETED TASKS -->
                 <div class="app-completed-tasks" th:unless = "${completedTasks.isEmpty()}">
                     <div class="task-card" th:each = "completedTask : ${completedTasks}">
-                        <h4 class="task-title" th:text = "${completedTask.title}"></h4>
+                        <div class="task-header">
+                            <p class="task-title" th:text = "${completedTask.title}"></p>
+                            <p th:class = "|task-status status-${completedTask.status.className()}|"
+                               th:text = "${completedTask.status}">
+                            </p>
+                        </div>
                         <p class="task-description" th:text = "${completedTask.description}"></p>
                         <p class="task-time" th:text = "${completedTask.dueDate}"></p>
-                        <form th:action = "@{/tasks/{id}/complete(id=${completedTask.taskId})}" method="POST">
-                            <button type="submit" class="task-update"> Complete </button>
-                        </form>
-                        <form th:action = "@{/tasks/{id}/delete(id=${completedTask.taskId})}" method="POST">
-                            <button type="submit" class="task-complete"> Delete </button>
-                        </form>
+                        <div class="task-buttons-container">
+                            <form th:action = "@{/tasks/{id}/complete(id=${completedTask.taskId})}" method="POST">
+                                <button type="submit" class="task-update"> Complete </button>
+                            </form>
+                            <form th:action = "@{/tasks/{id}/delete(id=${completedTask.taskId})}" method="POST">
+                                <button type="submit" class="task-complete"> Delete </button>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
                 <div class="app-completed-tasks" th:if = "${completedTasks.isEmpty()}">
@@ -138,9 +160,7 @@
             </div>
         </div>
 
-        <script src="/script.js">
-            showTodayTasks()
-        </script>
+        <script src="/script.js"> </script>
         <footer>
             <p>&copy; 2026 Focus Flow</p>
         </footer>
