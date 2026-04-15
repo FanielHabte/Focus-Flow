@@ -50,9 +50,9 @@
                     <h5> TODAY </h5>
                     <h4> Focus List </h4>
                     <div class="filter-buttons">
-                        <button> All </button>
-                        <button> Today </button>
-                        <button> Done </button>
+                        <button onclick="showAllTasks()"> All </button>
+                        <button onclick="showTodayTasks()"> Today </button>
+                        <button onclick="showCompletedTasks()"> Done </button>
                     </div>
                 </div>
 
@@ -138,6 +138,9 @@
             </div>
         </div>
 
+        <script src="/script.js">
+            showTodayTasks()
+        </script>
         <footer>
             <p>&copy; 2026 Focus Flow</p>
         </footer>
