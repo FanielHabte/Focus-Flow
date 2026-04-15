@@ -3,6 +3,7 @@ package com.fanihabte.focus_flow.repository;
 import com.fanihabte.focus_flow.entity.Task;
 import com.fanihabte.focus_flow.enums.TaskStatus;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Override @NullMarked
+    @Override @Nullable
     List<Task> findAll();
 
     @Override @NullMarked

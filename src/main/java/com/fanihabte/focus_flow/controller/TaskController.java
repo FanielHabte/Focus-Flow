@@ -28,7 +28,7 @@ public class TaskController {
 
         attributes.put("countOfOpenTasks", taskService.countOfOpenTasks());
         attributes.put("completePercentage", taskService.completionPercentage());
-        attributes.put("nextUp", taskService.getNearestCurrentDateTask());
+        attributes.put("nextUp", taskService.getNearestCurrentDateTask().orElse(null));
         attributes.put("todayTasks", taskService.getCurrentDateTask());
         attributes.put("tasks", taskService.getAllTasks());
         attributes.put("completedTasks", taskService.getCompletedTasks());

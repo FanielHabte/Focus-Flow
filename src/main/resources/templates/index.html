@@ -3,110 +3,144 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Website</title>
+        <title>Focus Flow</title>
         <link rel="stylesheet" href="/style.css">
     </head>
+
     <body>
-        <div id="app-header" class="black-box" >
-            <h1>Your next</h1>
-            <h1>task</h1>
-            <h1 class="colored-text">is ready.</h1>
-        </div>
-
-        <div class="app-analytics">
-            <p class="sub-headers"> QUICK VIEW </p>
-            <div id = "completion-percentage">
-                <h4 th:text = "${completePercentage}"></h4>
-                <p class="caption"> Week done </p>
-            </div>
-            <div id = "open-tasks" >
-                <h4 th:text = "${countOfOpenTasks}"></h4>
-                <p class="caption"> Tasks open </p>
+        <div class="app-grid">
+            <!-- HEADER -->
+            <div id="app-header" class="black-box" >
+                <h1> Your next <br> task <br> <span class="colored-text">is ready.</span> </h1>
             </div>
 
-            <div id = "next-task-avaiable" class="black-box" th:if = "${nextUp != null}">
-                <p class="sub-headers"> NEXT UP </p>
-                <h4 th:text = "${nextUp.title}"></h4>
-                <p th:text = "${nextUp.description}"></p>
+            <!-- ANALYTICS -->
+            <div id="app-analytics">
+
+                <h5>QUICK VIEW</h5>
+
+                <div id="analytics-numbers">
+                    <div id = "completion-percentage">
+                        <h4 th:text = "${completePercentage}"></h4>
+                        <p class="caption"> Week done </p>
+                    </div>
+                    <div id = "open-tasks" >
+                        <h4 th:text = "${countOfOpenTasks}"></h4>
+                        <p class="caption"> Tasks open </p>
+                    </div>
+                </div>
+
+                <div id = "next-task-available" class="black-box" th:if = "${nextUp != null}">
+                    <h5> NEXT UP </h5>
+                    <h4 th:text = "${nextUp.title}"></h4>
+                    <p th:text = "${nextUp.description}"></p>
+                </div>
+
+                <div id = "next-task-null" class="black-box" th:if = "${nextUp == null}">
+                    <h5 class="sub-headers"> NEXT UP </h5>
+                    <h4> All Done For Today! </h4>
+                </div>
+
             </div>
 
-            <div id = "next-task-null" class="black-box" th:if = "${nextUp == null}">
-                <p class="sub-headers"> NEXT UP </p>
-                <h4> All Done For Today! </h4>
+            <!-- TASK SECTION -->
+            <div class="internal-nav-and-tasks">
+                <!-- NAV -->
+                <div class="internal-navigation">
+                    <h5> TODAY </h5>
+                    <h4> Focus List </h4>
+                    <div class="filter-buttons">
+                        <button> All </button>
+                        <button> Today </button>
+                        <button> Done </button>
+                    </div>
+                </div>
+
+                <!-- ALL TASKS -->
+                <div class="app-all-tasks" th:unless = "${tasks.isEmpty()}">
+                    <div class="task-card" th:each = "task : ${tasks}">
+                        <h4 class="task-title" th:text = "${task.title}"></h4>
+                        <p class="task-description" th:text = "${task.description}"> Task description </p>
+                        <p class="task-time" th:text = "${task.dueDate}"> Task time </p>
+                        <form th:action = "@{/tasks/{id}/complete(id=${task.taskId})}" method="POST">
+                            <button type="submit" class="task-update"> Complete </button>
+                        </form>
+                        <form th:action = "@{/tasks/{id}/delete(id=${task.taskId})}" method="POST">
+                            <button type="submit" class="task-complete"> Delete </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="app-all-tasks" th:if = "${tasks.isEmpty()}">
+                    <h4> No Task! </h4>
+                </div>
+
+                <!-- TODAY'S TASKS -->
+                <div class="app-today-tasks" th:unless = "${todayTasks.isEmpty()}">
+                    <div class="task-card" th:each = "todayTask : ${todayTasks}">
+                        <h4 class="task-title" th:text = "${todayTask.title}"></h4>
+                        <p class="task-description" th:text = "${todayTask.description}"></p>
+                        <p class="task-time" th:text = "${todayTask.dueDate}"></p>
+                        <form th:action = "@{/tasks/{id}/complete(id=${todayTask.taskId})}" method="POST">
+                            <button type="submit" class="task-update"> Complete </button>
+                        </form>
+                        <form th:action = "@{/tasks/{id}/delete(id=${todayTask.taskId})}" method="POST">
+                            <button type="submit" class="task-complete"> Delete </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="app-today-tasks" th:if = "${todayTasks.isEmpty()}">
+                    <h4> No Task! </h4>
+                </div>
+
+                <!-- COMPLETED TASKS -->
+                <div class="app-completed-tasks" th:unless = "${completedTasks.isEmpty()}">
+                    <div class="task-card" th:each = "completedTask : ${completedTasks}">
+                        <h4 class="task-title" th:text = "${completedTask.title}"></h4>
+                        <p class="task-description" th:text = "${completedTask.description}"></p>
+                        <p class="task-time" th:text = "${completedTask.dueDate}"></p>
+                        <form th:action = "@{/tasks/{id}/complete(id=${completedTask.taskId})}" method="POST">
+                            <button type="submit" class="task-update"> Complete </button>
+                        </form>
+                        <form th:action = "@{/tasks/{id}/delete(id=${completedTask.taskId})}" method="POST">
+                            <button type="submit" class="task-complete"> Delete </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="app-completed-tasks" th:if = "${completedTasks.isEmpty()}">
+                    <h5> No Task! </h5>
+                </div>
+
             </div>
 
-        </div>
+            <!-- NEW TASK FORM -->
+            <div class="new-task">
+                <h5> CREATE TASK </h5>
+                <form th:action = "@{/task/create}" method = "POST" th:object = "${newTaskForm}">
+                    <label for="title"> Title </label><br>
+                    <input id="title" th:field = "*{title}"><br><br>
 
-        <div class="internal-navigation">
-            <p class="sub-headers">TODAY</p>
-            <h4>Focus List </h4>
-            <div class="filter-buttons">
-                <button> All </button>
-                <button> Today </button>
-                <button> Done </button>
+                    <label for="category"> Category </label><br>
+                    <select id="category" th:field="*{category}">
+                        <option value="STUDY"> Study </option>
+                        <option value="WORK"> Work </option>
+                        <option value="PERSONAL"> Personal </option>
+                        <option value="OTHER"> Other </option>
+                    </select>
+
+                    <label for="description"> Description </label><br>
+                    <input id="description" th:field = "*{description}"><br><br>
+
+                    <label for="dueDate"> Due Date </label><br>
+                    <input id="dueDate" type="datetime-local" th:field = "*{dueDate}"><br><br>
+
+                    <input type = "submit" value = "Create Task"><br><br>
+                </form>
             </div>
         </div>
 
-        <div class="app-all-tasks" th:if = "${tasks != null}">
-            <div class="task-card" th:each = "task : ${tasks}">
-                <h4 class="task-title" th:text = "${task.title}"></h4>
-                <p class="task-description" th:text = "${task.description}"> Task description </p>
-                <p class="task-time" th:text = "${task.dueDate}"> Task time </p>
-                <button class="task-update"> Update </button>
-                <button class="task-complete"> Complete </button>
-            </div>
-        </div>
-        <div class="app-all-tasks" th:if = "${tasks == null}">
-            <p> No Task! </p>
-        </div>
-
-        <div class="app-today-tasks" th:if = "${todayTasks != null}">
-            <div class="task-card" th:each = "todayTask : ${todayTasks}">
-                <h4 class="task-title" th:text = "${todayTask.title}"></h4>
-                <p class="task-description" th:text = "${todayTask.description}"></p>
-                <p class="task-time" th:text = "${todayTask.dueDate}"></p>
-                <button class="task-update"> Update </button>
-                <button class="task-complete"> Complete </button>
-            </div>
-        </div>
-        <div class="app-today-tasks" th:if = "${todayTasks == null}">
-            <p> No Task! </p>
-        </div>
-
-        <div class="app-completed-tasks" th:if = "${completedTasks != null}">
-            <div class="task-card" th:each = "completedTask : ${completedTasks}">
-                <h4 class="task-title" th:text = "${completedTask.title}"></h4>
-                <p class="task-description" th:text = "${completedTask.description}"></p>
-                <p class="task-time" th:text = "${completedTask.dueDate}"></p>
-                <button class="task-update"> Update </button>
-                <button class="task-complete"> Complete </button>
-            </div>
-        </div>
-        <div class="app-completed-tasks" th:if = "${completedTasks == null}">
-            <p> No Task! </p>
-        </div>
-
-
-        <div class="new-task">
-            <h2> Quick add </h2>
-            <form action="/task/create" method="POST">
-                <label for="title"> Title </label><br>
-                <input id="title" name="title"><br><br>
-
-                <label for="category"> Category </label><br>
-                <input id="category" name="category"><br><br>
-
-                <label for="description"> Description </label><br>
-                <input id="description" name="description"><br><br>
-
-                <label for="dueDate"> Due Date </label><br>
-                <input id="dueDate" name="dueDate"><br><br>
-
-                <input type="submit" value="Create Task"><br><br>
-            </form>
-        </div>
         <footer>
             <p>&copy; 2026 Focus Flow</p>
         </footer>
+
     </body>
 </html>

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -66,19 +67,11 @@ public class TaskService {
         return taskRepository.findByDueDateBetween(start, end);
     }
 
-    public Task getNearestCurrentDateTask () {
-        List<Task> orderedTasks = getCurrentDateTask()
+    public Optional<Task> getNearestCurrentDateTask () {
+        return getCurrentDateTask()
                 .stream()
                 .sorted(Comparator.comparing(Task::getDueDate))
-                .toList();
-
-        if (orderedTasks.isEmpty()) {
-            return null;
-        }
-        else {
-            return orderedTasks.getFirst();
-        }
-
+                .findFirst();
     }
 
     public Task getTaskByID (Long id) {
