@@ -22,7 +22,7 @@ public class TaskService {
     }
 
     private Integer[] getCompleteAndAllTaskCounts () {
-        List<Task> allTasks = taskRepository.findAll();
+        List<Task> allTasks = taskRepository.findAllByStatusNot(TaskStatus.INACTIVE);
         int countOfAllTasks = allTasks.size();
         int countOfCompletedTasks = allTasks
                 .stream()
@@ -39,21 +39,22 @@ public class TaskService {
         return countOfAllTasks - countOfCompletedTasks;
     }
 
-    public Double completionPercentage () {
+    public String completionPercentage () {
         Integer[] allAndCompleteTaskCounts = getCompleteAndAllTaskCounts();
         int countOfAllTasks = allAndCompleteTaskCounts[0];
         int countOfCompletedTasks = allAndCompleteTaskCounts[1];
 
         if (countOfAllTasks == 0) {
-            return 0.0;
+            return "0.0%";
         }
         else {
-            return ( (double)countOfCompletedTasks / (double)countOfAllTasks ) * 100;
+            double percentage = ( (double)countOfCompletedTasks / (double)countOfAllTasks ) * 100;
+            return String.format("%.1f", percentage) + "%" ;
         }
     }
 
     public List<Task> getAllTasks () {
-        return taskRepository.findAll();
+        return taskRepository.findAllByStatusNot(TaskStatus.INACTIVE);
     }
 
     public List<Task> getCompletedTasks () {
@@ -64,14 +65,12 @@ public class TaskService {
         LocalDateTime start = LocalDate.now().atTime(LocalTime.MIN);
         LocalDateTime end = LocalDate.now().atTime(LocalTime.MAX);
 
-        return taskRepository.findByDueDateBetween(start, end);
+        return taskRepository.findByDueDateBetweenAndStatusNot(start, end, TaskStatus.INACTIVE);
     }
 
     public Optional<Task> getNearestCurrentDateTask () {
         return getCurrentDateTask()
-                .stream()
-                .sorted(Comparator.comparing(Task::getDueDate))
-                .findFirst();
+                .stream().min(Comparator.comparing(Task::getDueDate));
     }
 
     public Task getTaskByID (Long id) {

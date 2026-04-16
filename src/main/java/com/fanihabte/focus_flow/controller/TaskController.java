@@ -48,18 +48,15 @@ public class TaskController {
 
     // This method updated the status of task to complete
     @PostMapping("/tasks/{id}/complete")
-    public String completeTask (@PathVariable(name = "id") Long id) {
+    public String completeTask (@PathVariable Long id) {
         Task task = taskService.getTaskByID(id);
         taskService.updateTaskStatus(task, TaskStatus.COMPLETED);
 
         return "redirect:/";
     }
 
-    // This method deletes (marks the task as non-active)
-    // I have created a new enum called inactive to marked deleted tasks as inactive instead of delete them directly
-    // This means I will need to filter out inactive from my find-all method in my repository
     @PostMapping("/tasks/{id}/delete")
-    public String deleteTask (@PathVariable(name = "id") Long id) {
+    public String deleteTask (@PathVariable Long id) {
         Task task = taskService.getTaskByID(id);
         taskService.updateTaskStatus(task, TaskStatus.INACTIVE);
 

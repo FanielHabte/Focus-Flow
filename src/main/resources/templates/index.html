@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Focus Flow</title>
         <link rel="stylesheet" href="/style.css">
+        <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/flow.png">
     </head>
 
     <body>
@@ -20,23 +21,23 @@
                 <h5>QUICK VIEW</h5>
 
                 <div id="analytics-numbers">
-                    <div id = "completion-percentage">
+                    <div id="completion-percentage">
                         <h4 th:text = "${completePercentage}"></h4>
                         <p class="caption"> Week done </p>
                     </div>
-                    <div id = "open-tasks" >
+                    <div id="open-tasks" >
                         <h4 th:text = "${countOfOpenTasks}"></h4>
                         <p class="caption"> Tasks open </p>
                     </div>
                 </div>
 
-                <div id = "next-task-available" class="black-box" th:if = "${nextUp != null}">
+                <div id="next-task-available" class="black-box" th:if = "${nextUp != null}">
                     <h5> NEXT UP </h5>
                     <h4 th:text = "${nextUp.title}"></h4>
                     <p th:text = "${nextUp.description}"></p>
                 </div>
 
-                <div id = "next-task-null" class="black-box" th:if = "${nextUp == null}">
+                <div id="next-task-null" class="black-box" th:if = "${nextUp == null}">
                     <h5 class="sub-headers"> NEXT UP </h5>
                     <h4> All Done For Today! </h4>
                 </div>
@@ -78,7 +79,7 @@
                     </div>
                 </div>
                 <div class="app-all-tasks" th:if = "${tasks.isEmpty()}">
-                    <h4> No Task! </h4>
+                    <h4> <br> No Task! </h4>
                 </div>
 
                 <!-- TODAY'S TASKS -->
@@ -103,7 +104,7 @@
                     </div>
                 </div>
                 <div class="app-today-tasks" th:if = "${todayTasks.isEmpty()}">
-                    <h4> No Task! </h4>
+                    <h4> <br> No Task! </h4>
                 </div>
 
                 <!-- COMPLETED TASKS -->
@@ -129,7 +130,7 @@
                     </div>
                 </div>
                 <div class="app-completed-tasks" th:if = "${completedTasks.isEmpty()}">
-                    <h5> No Task! </h5>
+                    <h4> <br> No Task! </h4>
                 </div>
 
             </div>
@@ -138,10 +139,10 @@
             <div class="new-task">
                 <h5> CREATE TASK </h5>
                 <form th:action = "@{/task/create}" method = "POST" th:object = "${newTaskForm}">
-                    <label for="title"> Title </label><br>
-                    <input id="title" th:field = "*{title}"><br><br>
+                    <label for="title"> Title </label>
+                    <input id="title" th:field = "*{title}">
 
-                    <label for="category"> Category </label><br>
+                    <label for="category"> Category </label>
                     <select id="category" th:field="*{category}">
                         <option value="STUDY"> Study </option>
                         <option value="WORK"> Work </option>
@@ -149,20 +150,20 @@
                         <option value="OTHER"> Other </option>
                     </select>
 
-                    <label for="description"> Description </label><br>
-                    <input id="description" th:field = "*{description}"><br><br>
+                    <label for="description"> Description </label>
+                    <input id="description" th:field = "*{description}">
 
-                    <label for="dueDate"> Due Date </label><br>
-                    <input id="dueDate" type="datetime-local" th:field = "*{dueDate}"><br><br>
+                    <label for="dueDate"> Due Date </label>
+                    <input id="dueDate" type="datetime-local" th:field = "*{dueDate}">
 
-                    <input type = "submit" value = "Create Task"><br><br>
+                    <input type = "submit" value = "Create Task">
                 </form>
             </div>
         </div>
 
         <script src="/script.js"> </script>
         <footer>
-            <p>&copy; 2026 Focus Flow</p>
+            <p>&copy; 2026 Focus Flow | Developed by Fani Habte | <a href="https://www.fanielhabte.com" target="_blank">My Protfolio Website</a> </p>
         </footer>
 
     </body>

@@ -10,5 +10,4 @@ public class FocusFlowApplication {
 		SpringApplication.run(FocusFlowApplication.class, args);
 	}
 
-
 }

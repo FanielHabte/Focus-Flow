@@ -3,7 +3,6 @@ package com.fanihabte.focus_flow.repository;
 import com.fanihabte.focus_flow.entity.Task;
 import com.fanihabte.focus_flow.enums.TaskStatus;
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,14 +13,17 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Override @Nullable
-    List<Task> findAll();
+    @NullMarked
+    List<Task> findAllByStatusNot(TaskStatus status);
 
-    @Override @NullMarked
+    @NullMarked @Override
     Optional<Task> findById(Long aLong);
 
+    @NullMarked
     List<Task> findByStatus(TaskStatus taskStatus);
-    List<Task> findByDueDateBetween (LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+    @NullMarked
+    List<Task> findByDueDateBetweenAndStatusNot (LocalDateTime startDateTime, LocalDateTime endDateTime, TaskStatus taskStatus);
 
     @Override @NullMarked
     <S extends Task> S save(S entity);
